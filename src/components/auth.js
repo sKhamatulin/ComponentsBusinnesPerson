@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 
-const TOKEN = "q1w2e3r4t5"
+
+const backendEmulator = (token) => {
+    const TOKENS = ["q1w2e3r4t5", "a1s2d3f4g5", "z1x2c3v4b5"]
+    return TOKENS.includes(token) ? true : false
+}
+
 
 class TokenChecker {
     constructor(tokenKey) {
@@ -10,20 +15,21 @@ class TokenChecker {
     checkToken() {
         return new Promise((resolve, reject) => {
             const token = this.tokenKey;
-            if (token === TOKEN) {   // localStorage.getItem(this.tokenKey)
+            if (backendEmulator(token)) {   
                 resolve(true);
             } else {
                 reject(new Error('Invalid token'))
             }
-        });
+        })
     }
 }
 
+
 const PrivatRoute = () => {
-    const [auth, setAuth] = useState(null);
+    const [auth, setAuth] = useState(null)
 
     useEffect(() => {
-        new TokenChecker("q1w2e3r4t5").checkToken()
+        new TokenChecker("z1x2c3v4b5").checkToken()   // localStorage.getItem(this.tokenKey)
             .then(() => {
                 console.log('Auth successful')
                 setAuth(true);
@@ -40,5 +46,6 @@ const PrivatRoute = () => {
 
     return auth ? <Outlet /> : <Navigate to="login" />
 };
+
 
 export default PrivatRoute;
