@@ -1,14 +1,39 @@
 import '../App.css';
 
 import React, { useState } from "react";
+import Api from '../utils/tokenCheck';
 
 const LoginPage = () => {
+    const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const [login, setLogin] = useState("")
-  const [password, setPassword] = useState("")
+    
 
-  return (
-    <div className="LoginPage">
+    const handleLogin = () => {
+
+      if (!login || !password) {
+          setShowErrorMessage(true);
+          return;
+      }
+        const api = new Api();
+        const params = {
+            login: login,
+            password: password
+        };
+
+    api.Post('https://server/login', params)
+        .then((data) => {
+            sessionStorage.setItem('token', data.token);
+            window.location.href = '/';
+        })
+        .catch((error) => {
+            console.error('Login failed:', error);
+        });
+    };
+
+    return (
+      <div className="LoginPage">
       <h1>Login page</h1>
       <div className="loginForm">
           <label>
@@ -18,10 +43,11 @@ const LoginPage = () => {
           <label>
               Password: <input type="password" placeholder='enter password' onChange={(e) => setPassword(e.target.value)}/>
           </label>
-          <button type="submit">Enter</button>
+          {showErrorMessage && <p>Please enter login and password</p>}
+          <button type="submit" onClick={handleLogin}>Enter</button>
       </div>
-    </div>
-  );
+      </div>
+    );
 }
 
 export default LoginPage;
