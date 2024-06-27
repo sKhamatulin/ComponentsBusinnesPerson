@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
-import Api from '../utils/tokenCheck';
+import Api from '../utils/Api';
 
 const PrivatRoute = () => {
     const [auth, setAuth] = useState(null);

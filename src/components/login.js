@@ -1,7 +1,7 @@
 import '../App.css';
 
 import React, { useState } from "react";
-import Api from '../utils/tokenCheck';
+import Api from '../utils/Api';
 
 const LoginPage = () => {
     const [login, setLogin] = useState("");
