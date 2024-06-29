@@ -8,8 +8,6 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-    
-
     const handleLogin = () => {
 
       if (!login || !password) {
